@@ -21,7 +21,7 @@ public:
 	virtual const Elem& operator[] (ptrdiff_t) const override; //R-value
 	virtual Elem& operator[] (ptrdiff_t) override; //L-value
 
-	FixedVector<Elem,size> operator= (FixedVector<Elem,size>&&);
+	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&);
 
 	virtual FixedVector<Elem,size> operator+ (FixedVector<Elem,size>) override;
 	virtual FixedVector<Elem,size> operator+ () override{ return *this; };
@@ -74,7 +74,7 @@ FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (FixedVector<Elem,size
 		_val[i] = other[i];
 		other[i] = 0;
 	}
-	return *this
+	return *this;
 }
 
 template <typename Elem, size_t size>
