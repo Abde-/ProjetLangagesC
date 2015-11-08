@@ -2,6 +2,7 @@
 #define _DYNVECTOR_H_
 
 #include "vector.hpp"
+#include "fixedvector.hpp"
 using namespace std;
 
 //----------------------------------------------------------------------------
@@ -12,7 +13,7 @@ class DynVector : public Vector<Elem,DynVector<Elem>> {
 public:
 	DynVector(size_t size);	//constructeur
 	DynVector(const DynVector<Elem>&); //constructeur de copie
-	DynVector(DynVector<Elem>&&);
+	DynVector(DynVector<Elem>&&); // constructeur de transfert
 
 	size_t getSize() const override { return _size; }
 	void resize(size_t);
@@ -20,7 +21,9 @@ public:
 	virtual const Elem& operator[] (ptrdiff_t) const override; //R-value
 	virtual Elem& operator[] (ptrdiff_t) override;			 //L-value
 
-	DynVector<Elem>& operator= (const DynVector<Elem>&);
+	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
+	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
+
 	virtual DynVector<Elem> operator+ (DynVector<Elem>) override;
 	virtual DynVector<Elem> operator+ () override { return *this; };
 	virtual DynVector<Elem>& operator+=(DynVector<Elem>) override;
@@ -95,6 +98,17 @@ DynVector<Elem>& DynVector<Elem>::operator= (const DynVector<Elem>& other) {
 	size_t newSize(other.getSize()); Elem* newVal(new Elem[newSize]);
 	for (size_t i = 0; i < newSize; ++i)
 		newVal[i] = other[i];
+	delete[] _val; _val = newVal; _size = newSize;
+	return *this;
+}
+
+template <typename Elem>
+DynVector<Elem>& DynVector<Elem>::operator= (DynVector<Elem>&& other){
+	size_t newSize(other.getSize()); Elem* newVal(new Elem[newSize]);
+	for (size_t i = 0; i < newSize; ++i){
+		newVal[i] = other[i];
+		other[i] = 0;
+	}
 	delete[] _val; _val = newVal; _size = newSize;
 	return *this;
 }
