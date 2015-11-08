@@ -18,10 +18,10 @@ public:
 	virtual const Elem& operator[] (ptrdiff_t) const = 0;	//R-value
 	virtual Elem& operator[] (ptrdiff_t) = 0;				//L-value
 
-    virtual VectRes operator+ (VectRes) = 0;	//binaire
+    virtual VectRes operator+ (VectRes) = 0;				//binaire
     virtual VectRes operator+ () = 0;						//unaire
 	virtual VectRes& operator+=(VectRes) = 0;
-	virtual VectRes operator- (VectRes) = 0;	//binaire
+	virtual VectRes operator- (VectRes) = 0;				//binaire
 	virtual VectRes operator- () = 0;						//unaire
 	virtual VectRes& operator-=(VectRes) = 0;
 	virtual VectRes operator* (Elem) = 0;

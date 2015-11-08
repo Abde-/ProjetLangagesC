@@ -11,8 +11,9 @@ class FixedVector: public Vector<Elem,FixedVector<Elem,size>>{
 	Elem _val[size];
 
 public:
-	FixedVector<Elem,size>(); //constructeur
-	FixedVector<Elem,size>(const FixedVector<Elem,size>&); //constructeur copie
+	FixedVector(); //constructeur
+	FixedVector(const FixedVector<Elem,size>&); //constructeur copie
+	FixedVector(FixedVector<Elem,size>&&);
 
 	size_t getSize() const override { return size; }
 
@@ -54,6 +55,14 @@ Elem& FixedVector<Elem,size>::operator[](ptrdiff_t index) {
 	if (size_t(index) >= size)
 		throw out_of_range("FixedVector: Index Out of Range");
 	return _val[index];
+}
+
+template <typename Elem, size_t size>
+FixedVector<Elem,size>::FixedVector(FixedVector<Elem,size>&& other){
+	for(size_t i = 0; i < size; ++i){
+		_val[i] = other[i];
+		other[i] = 0;
+	}
 }
 
 template <typename Elem, size_t size>

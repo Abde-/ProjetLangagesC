@@ -12,6 +12,7 @@ class DynVector : public Vector<Elem,DynVector<Elem>> {
 public:
 	DynVector(size_t size);	//constructeur
 	DynVector(const DynVector<Elem>&); //constructeur de copie
+	DynVector(DynVector<Elem>&&);
 
 	size_t getSize() const override { return _size; }
 	void resize(size_t);
@@ -44,6 +45,15 @@ template <typename Elem>
 DynVector<Elem>::DynVector(const DynVector<Elem>& other):
 	_size(other.getSize()), _val(new Elem[other.getSize()]) {
 	for (size_t i = 0; i < _size; ++i) _val[i] = other[i];
+}
+
+template <typename Elem>
+DynVector<Elem>::DynVector(DynVector<Elem>&& other):
+	_size(other.getSize()), _val(new Elem[other.getSize()]) {
+	for(size_t i = 0; i < _size; ++i){
+		_val[i] = other[i];
+		other[i] = 0;
+	}
 }
 
 template <typename Elem>
