@@ -6,6 +6,8 @@
 
 using namespace std;
 
+template <typename Elem>
+class DynVector;
 //----------------------------------------------------------------------------
 // Template pour type d'element dans le vecteur / type de vecteur à renvoyer
 template <typename Elem, typename VectRes>
@@ -18,13 +20,13 @@ public:
 	virtual const Elem& operator[] (ptrdiff_t) const = 0;	//R-value
 	virtual Elem& operator[] (ptrdiff_t) = 0;				//L-value
 
-    virtual VectRes operator+ (VectRes) = 0;				//binaire
+    virtual VectRes operator+ (const VectRes) = 0;				//binaire
     virtual VectRes operator+ () = 0;						//unaire
-	virtual VectRes& operator+=(VectRes) = 0;
-	virtual VectRes operator- (VectRes) = 0;				//binaire
+	virtual VectRes& operator+=(const VectRes) = 0;
+	virtual VectRes operator- (const VectRes) = 0;				//binaire
 	virtual VectRes operator- () = 0;						//unaire
-	virtual VectRes& operator-=(VectRes) = 0;
-	virtual VectRes operator* (Elem) = 0;
+	virtual VectRes& operator-=(const VectRes) = 0;
+	virtual VectRes operator* (const Elem) = 0;
 
 	friend ostream& operator<< (ostream& os, const Vector<Elem,VectRes>& v) {
 		v.print(os);

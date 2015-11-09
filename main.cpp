@@ -4,6 +4,8 @@
 #include "dynvector.hpp"
 #include "fixedvector.hpp"
 
+using namespace std;
+
 int main() {
 	DynVector<int> vect1(5);
 	DynVector<int> vect2(5);

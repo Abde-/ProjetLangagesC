@@ -3,7 +3,6 @@
 #define _FIXEDVECTOR_H_
 
 #include "vector.hpp"
-#include "dynvector.hpp"
 using namespace std;
 
 //----------------------------------------------------------------------------
@@ -23,13 +22,13 @@ public:
 
 	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&);
 
-	virtual FixedVector<Elem,size> operator+ (FixedVector<Elem,size>) override;
+	virtual FixedVector<Elem,size> operator+ (const FixedVector<Elem,size>) override;
 	virtual FixedVector<Elem,size> operator+ () override{ return *this; };
-	virtual FixedVector<Elem,size>& operator+= (FixedVector<Elem,size>) override;
-	virtual FixedVector<Elem,size> operator- (FixedVector<Elem,size>) override;
+	virtual FixedVector<Elem,size>& operator+= (const FixedVector<Elem,size>) override;
+	virtual FixedVector<Elem,size> operator- (const FixedVector<Elem,size>) override;
 	virtual FixedVector<Elem,size> operator- () override;
-	virtual FixedVector<Elem,size>& operator-= (FixedVector<Elem,size>) override;
-	virtual FixedVector<Elem,size> operator* (Elem) override;
+	virtual FixedVector<Elem,size>& operator-= (const FixedVector<Elem,size>) override;
+	virtual FixedVector<Elem,size> operator* (const Elem) override;
 
 	virtual void print(ostream&) const override;
 	virtual void input(istream&) override;
@@ -78,7 +77,7 @@ FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (FixedVector<Elem,size
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size> FixedVector<Elem,size>::operator+ (FixedVector<Elem,size> other){
+FixedVector<Elem,size> FixedVector<Elem,size>::operator+ (const FixedVector<Elem,size> other){
 	FixedVector<Elem,size> newVect;
 
 	for (size_t i = 0; i < size; ++i)
@@ -87,14 +86,14 @@ FixedVector<Elem,size> FixedVector<Elem,size>::operator+ (FixedVector<Elem,size>
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>& FixedVector<Elem,size>::operator+= (FixedVector<Elem,size> other){
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator+= (const FixedVector<Elem,size> other){
 	for (size_t i = 0; i < size; ++i)
 			_val[i] += other[i];
 	return *this;
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size> FixedVector<Elem,size>::operator- (FixedVector<Elem,size> other){
+FixedVector<Elem,size> FixedVector<Elem,size>::operator- (const FixedVector<Elem,size> other){
 	FixedVector<Elem,size> newVect;
 
 	for (size_t i = 0; i < size; ++i)
@@ -111,14 +110,14 @@ FixedVector<Elem,size> FixedVector<Elem,size>::operator- (){
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>& FixedVector<Elem,size>::operator-= (FixedVector<Elem,size> other){
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator-= (const FixedVector<Elem,size> other){
 	for (size_t i = 0; i < size; ++i)
 		_val[i] -= other[i];
 	return *this;
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size> FixedVector<Elem,size>::operator* (Elem item){
+FixedVector<Elem,size> FixedVector<Elem,size>::operator* (const Elem item){
 	FixedVector<Elem,size> newVect;
 
 	for (size_t i = 0; i < size; ++i) {

@@ -2,7 +2,6 @@
 #define _DYNVECTOR_H_
 
 #include "vector.hpp"
-#include "fixedvector.hpp"
 using namespace std;
 
 //----------------------------------------------------------------------------
@@ -24,13 +23,13 @@ public:
 	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
 	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
 
-	virtual DynVector<Elem> operator+ (DynVector<Elem>) override;
+	virtual DynVector<Elem> operator+ (const DynVector<Elem>) override;
 	virtual DynVector<Elem> operator+ () override { return *this; };
-	virtual DynVector<Elem>& operator+=(DynVector<Elem>) override;
-	virtual DynVector<Elem> operator- (DynVector<Elem>) override;
+	virtual DynVector<Elem>& operator+=(const DynVector<Elem>) override;
+	virtual DynVector<Elem> operator- (const DynVector<Elem>) override;
 	virtual DynVector<Elem> operator- () override;	
-	virtual DynVector<Elem>& operator-=(DynVector<Elem>) override;
-	virtual DynVector<Elem> operator* (Elem) override;
+	virtual DynVector<Elem>& operator-=(const DynVector<Elem>) override;
+	virtual DynVector<Elem> operator* (const Elem) override;
 
 	virtual void print(ostream&) const override;
 	virtual void input(istream&) override;
@@ -114,7 +113,7 @@ DynVector<Elem>& DynVector<Elem>::operator= (DynVector<Elem>&& other){
 }
 
 template <typename Elem> // works -> optimiser, marche pas dans tous les cas
-DynVector<Elem> DynVector<Elem>::operator+ (DynVector<Elem> other) {
+DynVector<Elem> DynVector<Elem>::operator+ (const DynVector<Elem> other) {
     size_t newSize;
 
 	if (_size > other.getSize())
@@ -129,7 +128,7 @@ DynVector<Elem> DynVector<Elem>::operator+ (DynVector<Elem> other) {
 }
 
 template <typename Elem> // works
-DynVector<Elem>& DynVector<Elem>::operator+= (DynVector<Elem> other) {
+DynVector<Elem>& DynVector<Elem>::operator+= (const DynVector<Elem> other) {
 	size_t newSize;
 
 	if (_size < other.getSize()){
@@ -144,7 +143,7 @@ DynVector<Elem>& DynVector<Elem>::operator+= (DynVector<Elem> other) {
 }
 
 template <typename Elem> // works -> optimiser, marche pas dans tous les cas
-DynVector<Elem> DynVector<Elem>::operator-(DynVector<Elem> other) {
+DynVector<Elem> DynVector<Elem>::operator-(const DynVector<Elem> other) {
     size_t newSize;
 
 	if (_size > other.getSize())
@@ -167,7 +166,7 @@ DynVector<Elem> DynVector<Elem>::operator-() {
 }
 
 template <typename Elem> // works
-DynVector<Elem>& DynVector<Elem>::operator-=(DynVector<Elem> other) {
+DynVector<Elem>& DynVector<Elem>::operator-=(const DynVector<Elem> other) {
 	size_t newSize;
 
 	if (_size < other.getSize()){
@@ -182,7 +181,7 @@ DynVector<Elem>& DynVector<Elem>::operator-=(DynVector<Elem> other) {
 }
 
 template <typename Elem>
-DynVector<Elem> DynVector<Elem>::operator*(Elem item) {
+DynVector<Elem> DynVector<Elem>::operator*(const Elem item) {
 	DynVector<Elem> newVect(_size);
 
 	for (size_t i = 0; i < _size; ++i)
