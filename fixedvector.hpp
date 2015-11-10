@@ -3,6 +3,7 @@
 #define _FIXEDVECTOR_H_
 
 #include "vector.hpp"
+#include "dynvector.hpp"
 using namespace std;
 
 //----------------------------------------------------------------------------
@@ -14,13 +15,15 @@ public:
 	FixedVector(); //constructeur
 	FixedVector(const FixedVector<Elem,size>&); //constructeur copie
 	FixedVector(FixedVector<Elem,size>&&); // constructeur de transfert
+	FixedVector(const DynVector<Elem>&); // constructeur conversion
 
 	size_t getSize() const override { return size; }
 
 	virtual const Elem& operator[] (ptrdiff_t) const override; //R-value
 	virtual Elem& operator[] (ptrdiff_t) override; //L-value
 
-	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&);
+	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&); // transfert
+	FixedVector<Elem,size>& operator= (const DynVector<Elem>&); // conversion
 
 	virtual FixedVector<Elem,size> operator+ (const FixedVector<Elem,size>) override;
 	virtual FixedVector<Elem,size> operator+ () override{ return *this; };
@@ -68,11 +71,32 @@ FixedVector<Elem,size>::FixedVector(FixedVector<Elem,size>&& other){
 }
 
 template <typename Elem, size_t size>
+FixedVector<Elem,size>::FixedVector(const DynVector<Elem>& other){
+	for(size_t i = 0; i < size; ++i){
+		if (i < other.getSize())
+			_val[i] = other[i];
+		else
+			_val[i] = 0;
+	}
+}
+template <typename Elem, size_t size>
 FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (FixedVector<Elem,size>&& other){
 	for(size_t i = 0; i < size; ++i){
 		_val[i] = other[i];
 		other[i] = 0;
 	}
+	return *this;
+}
+
+template <typename Elem, size_t size>
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (const DynVector<Elem>& other){
+	for(size_t i = 0; i < size; ++i){
+		if (i < other.getSize())
+			_val[i] = other[i];
+		else
+			_val[i] = 0;
+	}	
+
 	return *this;
 }
 

@@ -45,6 +45,9 @@ int main() {
 	cout << vect3 * 3 << endl;
 	cout << 3 * vect3 << endl;
 
+	FixedVector<int,10> vectfixed(vect1); // conversion
+	cout << vectfixed << endl;
+	cout << static_cast<FixedVector<int,10>>(vect3*3) << endl; // static_cast
 
 	return 0;
 }

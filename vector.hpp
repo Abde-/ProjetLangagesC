@@ -6,8 +6,6 @@
 
 using namespace std;
 
-template <typename Elem>
-class DynVector;
 //----------------------------------------------------------------------------
 // Template pour type d'element dans le vecteur / type de vecteur à renvoyer
 template <typename Elem, typename VectRes>
