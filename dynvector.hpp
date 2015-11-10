@@ -4,6 +4,9 @@
 #include "vector.hpp"
 using namespace std;
 
+template <typename Elem, size_t SIZE>
+class FixedVector;
+
 //----------------------------------------------------------------------------
 template <typename Elem>
 class DynVector : public Vector<Elem,DynVector<Elem>> {
@@ -13,6 +16,8 @@ public:
 	DynVector(size_t size);	//constructeur
 	DynVector(const DynVector<Elem>&); //constructeur de copie
 	DynVector(DynVector<Elem>&&); // constructeur de transfert
+	template <size_t SIZE>
+	DynVector(const FixedVector<Elem,SIZE>&); // TODO
 
 	size_t getSize() const override { return _size; }
 	void resize(size_t);
@@ -37,6 +42,8 @@ public:
 	virtual ~DynVector<Elem>() { delete[] _val; }
 };
 //----------------------------------------------------------------------------
+
+#include "fixedvector.hpp"
 
 template <typename Elem>
 DynVector<Elem>::DynVector(size_t size): _size(size), _val(new Elem[size]) {

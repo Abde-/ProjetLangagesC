@@ -3,8 +3,10 @@
 #define _FIXEDVECTOR_H_
 
 #include "vector.hpp"
-#include "dynvector.hpp"
 using namespace std;
+
+template <typename Elem>
+class DynamicVector;
 
 //----------------------------------------------------------------------------
 template <typename Elem,size_t size>
@@ -37,6 +39,8 @@ public:
 	virtual void input(istream&) override;
 };
 //----------------------------------------------------------------------------
+
+#include "dynvector.hpp"
 
 template <typename Elem, size_t size>
 FixedVector<Elem,size>::FixedVector(){
