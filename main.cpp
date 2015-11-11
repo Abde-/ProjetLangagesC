@@ -43,11 +43,12 @@ int main() {
 	cout << vect3 * entier << endl;
 	cout << entier * vect3 << endl;
 	cout << vect3 * 3 << endl;
-	cout << 3 * vect3 << endl;
 
 	FixedVector<int,10> vectfixed(vect1); // conversion
 	cout << vectfixed << endl;
 	cout << static_cast<FixedVector<int,10>>(vect3*3) << endl; // static_cast
+
+	cout << "Hello World 2" << endl;
 
 	return 0;
 }
