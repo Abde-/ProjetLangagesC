@@ -17,7 +17,7 @@ public:
 	DynVector(const DynVector<Elem>&); //constructeur de copie
 	DynVector(DynVector<Elem>&&); // constructeur de transfert
 	template <size_t SIZE>
-	DynVector(const FixedVector<Elem,SIZE>&); // TODO
+	DynVector(const FixedVector<Elem,SIZE>&); // constructeur de conversion
 
 	size_t getSize() const override { return _size; }
 	void resize(size_t);
@@ -27,6 +27,8 @@ public:
 
 	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
 	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
+	template <size_t SIZE>
+	DynVector<Elem>& operator= (const FixedVector<Elem,SIZE>&);
 
 	virtual DynVector<Elem> operator+ (const DynVector<Elem>) override;
 	virtual DynVector<Elem> operator+ () override { return *this; };
@@ -66,6 +68,13 @@ DynVector<Elem>::DynVector(DynVector<Elem>&& other):
 }
 
 template <typename Elem>
+template <size_t SIZE>
+DynVector<Elem>::DynVector(const FixedVector<Elem,SIZE>& other):
+	_size(other.getSize()), _val(new Elem[other.getSize()]) {
+		for (size_t i = 0; i < _size; ++i) _val[i] = other[i];
+}
+
+template <typename Elem>
 void DynVector<Elem>::resize(size_t newSize){
 	Elem* newVal = new Elem[newSize];
 
@@ -98,7 +107,6 @@ Elem& DynVector<Elem>::operator[](ptrdiff_t index) {
 	return _val[index];
 }
 
-
 template <typename Elem>
 DynVector<Elem>& DynVector<Elem>::operator= (const DynVector<Elem>& other) {
 	size_t newSize(other.getSize()); Elem* newVal(new Elem[newSize]);
@@ -115,6 +123,16 @@ DynVector<Elem>& DynVector<Elem>::operator= (DynVector<Elem>&& other){
 		newVal[i] = other[i];
 		other[i] = 0;
 	}
+	delete[] _val; _val = newVal; _size = newSize;
+	return *this;
+}
+
+template <typename Elem>
+template <size_t SIZE>
+DynVector<Elem>& DynVector<Elem>::operator= (const FixedVector<Elem,SIZE>& other) {
+	size_t newSize(other.getSize()); Elem* newVal(new Elem[newSize]);
+	for (size_t i = 0; i < newSize; ++i)
+		newVal[i] = other[i];
 	delete[] _val; _val = newVal; _size = newSize;
 	return *this;
 }

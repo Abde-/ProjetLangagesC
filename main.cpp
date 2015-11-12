@@ -50,5 +50,7 @@ int main() {
 
 	cout << "Hello World 2" << endl;
 
+	cout << static_cast<DynVector<int>>(vect1) << endl;
+
 	return 0;
 }
