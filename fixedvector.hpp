@@ -34,6 +34,7 @@ public:
 	virtual FixedVector<Elem,size> operator- () override;
 	virtual FixedVector<Elem,size>& operator-= (const FixedVector<Elem,size>) override;
 	virtual FixedVector<Elem,size> operator* (const Elem) override;
+	virtual FixedVector<Elem,size>& operator*= (const Elem) override;
 
 	virtual void print(ostream&) const override;
 	virtual void input(istream&) override;
@@ -157,6 +158,14 @@ FixedVector<Elem,size> FixedVector<Elem,size>::operator* (const Elem item){
 template <typename Elem, size_t size>
 FixedVector<Elem,size> operator* (Elem item, FixedVector<Elem,size> v){
 	return v*item;
+}
+
+template <typename Elem, size_t size>
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator*= (const Elem item){
+	for (size_t i = 0; i < size; ++i) {
+		_val[i] = _val[i] * item;
+	}
+	return *this;
 }
 
 template <typename Elem, size_t size>

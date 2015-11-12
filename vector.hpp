@@ -25,6 +25,7 @@ public:
 	virtual VectRes operator- () = 0;						//unaire
 	virtual VectRes& operator-=(const VectRes) = 0;
 	virtual VectRes operator* (const Elem) = 0;
+	virtual VectRes& operator*=(const Elem) = 0;
 
 	friend ostream& operator<< (ostream& os, const Vector<Elem,VectRes>& v) {
 		v.print(os);

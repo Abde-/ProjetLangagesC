@@ -37,6 +37,7 @@ public:
 	virtual DynVector<Elem> operator- () override;	
 	virtual DynVector<Elem>& operator-=(const DynVector<Elem>) override;
 	virtual DynVector<Elem> operator* (const Elem) override;
+	virtual DynVector<Elem>& operator*= (const Elem) override;
 
 	virtual void print(ostream&) const override;
 	virtual void input(istream&) override;
@@ -217,6 +218,13 @@ DynVector<Elem> DynVector<Elem>::operator*(const Elem item) {
 template <typename Elem>
 DynVector<Elem> operator*(Elem item, DynVector<Elem> v){
 	return v*item;
+}
+
+template <typename Elem>
+DynVector<Elem>& DynVector<Elem>::operator*=(const Elem item) {
+	for (size_t i = 0; i < _size; ++i)
+		_val[i] = _val[i] * item;
+	return *this;
 }
 
 template <typename Elem> // works
