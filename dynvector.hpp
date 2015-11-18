@@ -2,54 +2,45 @@
 #define _DYNVECTOR_H_
 
 #include "vector.hpp"
-using namespace std;
+#include "fixedvector.hpp"
 
 template <typename Elem, size_t SIZE>
 class FixedVector;
 
+using namespace std;
+
+
 //----------------------------------------------------------------------------
 template <typename Elem>
-class DynVector : public Vector<Elem,DynVector<Elem>> {
+class DynVector : public Vector<Elem> {
 	size_t _size;
 	Elem* _val;				//tableau dynamique
 public:
-	DynVector(size_t size);	//constructeur
+	DynVector();	//constructeur
 	DynVector(const DynVector<Elem>&); //constructeur de copie
 	DynVector(DynVector<Elem>&&); // constructeur de transfert
 	template <size_t SIZE>
 	DynVector(const FixedVector<Elem,SIZE>&); // constructeur de conversion
 
 	size_t getSize() const override { return _size; }
+	Elem* getVal() const override { return _val; }
 	void resize(size_t);
-
-	virtual const Elem& operator[] (ptrdiff_t) const override; //R-value
-	virtual Elem& operator[] (ptrdiff_t) override;			 //L-value
 
 	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
 	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
 	template <size_t SIZE>
 	DynVector<Elem>& operator= (const FixedVector<Elem,SIZE>&);
 
-	virtual DynVector<Elem> operator+ (const DynVector<Elem>) override;
-	virtual DynVector<Elem> operator+ () override { return *this; };
-	virtual DynVector<Elem>& operator+=(const DynVector<Elem>) override;
-	virtual DynVector<Elem> operator- (const DynVector<Elem>) override;
-	virtual DynVector<Elem> operator- () override;	
-	virtual DynVector<Elem>& operator-=(const DynVector<Elem>) override;
-	virtual DynVector<Elem> operator* (const Elem) override;
-	virtual DynVector<Elem>& operator*= (const Elem) override;
-
 	virtual void print(ostream&) const override;
-	virtual void input(istream&) override;
+	virtual void input(istream&) const override;
 
 	virtual ~DynVector<Elem>() { delete[] _val; }
 };
 //----------------------------------------------------------------------------
 
-#include "fixedvector.hpp"
 
 template <typename Elem>
-DynVector<Elem>::DynVector(size_t size): _size(size), _val(new Elem[size]) {
+DynVector<Elem>::DynVector(): _size(0), _val(new Elem[0]) {
 	for (size_t i = 0; i < _size; ++i) _val[i] = 0;
 }
 
@@ -93,21 +84,6 @@ void DynVector<Elem>::resize(size_t newSize){
 
 }
 
-template <typename Elem> // works
-const Elem& DynVector<Elem>::operator[](ptrdiff_t index) const {
-	if (size_t(index) >= _size)
-		throw out_of_range("DynVector: Index Out of Range");
-	return _val[index];
-}
-
-
-template <typename Elem> // works
-Elem& DynVector<Elem>::operator[](ptrdiff_t index) {
-	if (size_t(index) >= _size)
-		throw out_of_range("DynVector: Index Out of Range");
-	return _val[index];
-}
-
 template <typename Elem>
 DynVector<Elem>& DynVector<Elem>::operator= (const DynVector<Elem>& other) {
 	size_t newSize(other.getSize()); Elem* newVal(new Elem[newSize]);
@@ -138,95 +114,6 @@ DynVector<Elem>& DynVector<Elem>::operator= (const FixedVector<Elem,SIZE>& other
 	return *this;
 }
 
-template <typename Elem> // works -> optimiser, marche pas dans tous les cas
-DynVector<Elem> DynVector<Elem>::operator+ (const DynVector<Elem> other) {
-    size_t newSize;
-
-	if (_size > other.getSize())
-		newSize = _size;
-	else{ newSize = other.getSize(); }
-
-	DynVector<Elem> newVect(newSize);
-
-	for (size_t i = 0; i < newSize; ++i)
-		newVect[i] = _val[i] + other[i];
-	return newVect;
-}
-
-template <typename Elem> // works
-DynVector<Elem>& DynVector<Elem>::operator+= (const DynVector<Elem> other) {
-	size_t newSize;
-
-	if (_size < other.getSize()){
-		newSize = other.getSize();
-		resize(newSize); 
-	}
-	else { newSize = other.getSize(); }
-
-	for (size_t i = 0; i < newSize; ++i)
-		_val[i] += other[i];
-	return *this;
-}
-
-template <typename Elem> // works -> optimiser, marche pas dans tous les cas
-DynVector<Elem> DynVector<Elem>::operator-(const DynVector<Elem> other) {
-    size_t newSize;
-
-	if (_size > other.getSize())
-		newSize = _size;
-	else{ newSize = other.getSize(); }
-
-	DynVector<Elem> newVect(newSize);
-
-	for (size_t i = 0; i < newSize; ++i)
-		newVect[i] = _val[i] - other[i];
-	return newVect;
-}
-
-template <typename Elem>
-DynVector<Elem> DynVector<Elem>::operator-() {
-	DynVector<Elem> newVect(_size);
-	for (size_t i = 0; i < _size; ++i)
-		newVect[i] = -_val[i];
-	return newVect;
-}
-
-template <typename Elem> // works
-DynVector<Elem>& DynVector<Elem>::operator-=(const DynVector<Elem> other) {
-	size_t newSize;
-
-	if (_size < other.getSize()){
-		newSize = other.getSize();
-		resize(newSize);
-	}
-	else { newSize = other.getSize(); }
-
-	for (size_t i = 0; i < newSize; ++i)
-		_val[i] -= other[i];
-	return *this;
-}
-
-template <typename Elem>
-DynVector<Elem> DynVector<Elem>::operator*(const Elem item) {
-	DynVector<Elem> newVect(_size);
-
-	for (size_t i = 0; i < _size; ++i)
-		newVect[i] = _val[i] * item;
-	return newVect;
-}
-
-template <typename Elem>
-DynVector<Elem> operator*(Elem item, DynVector<Elem> v){
-	return v*item;
-}
-
-template <typename Elem>
-DynVector<Elem>& DynVector<Elem>::operator*=(const Elem item) {
-	for (size_t i = 0; i < _size; ++i)
-		_val[i] = _val[i] * item;
-	return *this;
-}
-
 template <typename Elem> // works
 void DynVector<Elem>::print(ostream& os) const {
 	os << "[";
@@ -239,7 +126,7 @@ void DynVector<Elem>::print(ostream& os) const {
 }
 
 template <typename Elem> // works
-void DynVector<Elem>::input(istream& is) {
+void DynVector<Elem>::input(istream& is) const {
 	for (size_t i=0; i < _size; ++i)
 		is >> _val[i];
 }

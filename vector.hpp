@@ -6,43 +6,129 @@
 
 using namespace std;
 
-//----------------------------------------------------------------------------
-// Template pour type d'element dans le vecteur / type de vecteur à renvoyer
-template <typename Elem, typename VectRes>
-// Classe abstraite Vector - pere de tous les autres
-class Vector {
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename Elem>
+class Vector{
 public:
-
 	virtual size_t getSize() const = 0;
+	virtual Elem* getVal() const = 0;
 
-	virtual const Elem& operator[] (ptrdiff_t) const = 0;	//R-value
-	virtual Elem& operator[] (ptrdiff_t) = 0;				//L-value
+	virtual const Elem& operator[] (ptrdiff_t) const;
+	virtual Elem& operator[] (ptrdiff_t);
 
-    virtual VectRes operator+ (const VectRes) = 0;				//binaire
-    virtual VectRes operator+ () = 0;						//unaire
-	virtual VectRes& operator+=(const VectRes) = 0;
-	virtual VectRes operator- (const VectRes) = 0;				//binaire
-	virtual VectRes operator- () = 0;						//unaire
-	virtual VectRes& operator-=(const VectRes) = 0;
-	virtual VectRes operator* (const Elem) = 0;
-	virtual VectRes& operator*=(const Elem) = 0;
-
-	friend ostream& operator<< (ostream& os, const Vector<Elem,VectRes>& v) {
+	friend ostream& operator<< (ostream& os, const Vector<Elem>& v) {
 		v.print(os);
 		return os;
 	};
 	
-	friend istream& operator>> (istream& is, const Vector<Elem,VectRes>& v) {
+	friend istream& operator>> (istream& is, const Vector<Elem>& v) {
 		v.input(is);
 		return is;
 	};
 
 	virtual void print(ostream&) const = 0; //methodes pour rendre iostream virtuellement pure
-	virtual void input(istream&) = 0;
+	virtual void input(istream&) const = 0;
 
-	virtual ~Vector<Elem,VectRes>() = default;
-	
+	virtual ~Vector<Elem>() = default;
 };
-//----------------------------------------------------------------------------
 
-#endif   /* _VECTOR_H_ */
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename Elem>
+const Elem& Vector<Elem>::operator[] (ptrdiff_t index) const{
+	if (size_t(index) >= this->getSize())
+		throw out_of_range("Vector: Index Out of Range");
+	return this->getVal()[index];
+}
+
+template <typename Elem>
+Elem& Vector<Elem>::operator[] (ptrdiff_t index){
+	if (size_t(index) >= this->getSize())
+		throw out_of_range("Vector: Index Out of Range");
+	return this->getVal()[index];
+}
+
+template <typename VectRes>
+//unary
+VectRes operator+ (const VectRes& first){ 
+	return first; 
+}
+
+template <typename VectRes>
+//binary
+VectRes operator+ (const VectRes& first, const VectRes& second){
+	size_t newSize;
+
+	if (first.getSize() > second.getSize())
+		newSize = first.getSize();
+	else{ newSize = second.getSize(); }
+
+	VectRes newVect;
+	newVect.resize(newSize);
+
+	for (size_t i = 0; i < newSize; ++i)
+		newVect[i] = first[i] + second[i];
+	return newVect;
+}
+
+template <typename VectRes>
+VectRes& operator+= (VectRes& first, const VectRes& second){
+	first = first + second;
+	return first;
+}
+
+template <typename VectRes>
+VectRes operator- (const VectRes& first){
+	VectRes newVect;
+	newVect.resize(first.getSize());
+	for (size_t i = 0; i < first.getSize(); ++i)
+		newVect[i] = -first[i];
+	return newVect;
+}
+
+template <typename VectRes>
+VectRes operator- (const VectRes& first, const VectRes& second){
+    size_t newSize;
+
+	if (first.getSize() > second.getSize())
+		newSize = first.getSize();
+	else{ newSize = second.getSize(); }
+
+	VectRes newVect;
+	newVect.resize(newSize);
+
+	for (size_t i = 0; i < newSize; ++i)
+		newVect[i] = first[i] - second[i];
+	return newVect;
+}
+
+template <typename VectRes>
+VectRes& operator-= (VectRes& first, const VectRes& second){
+	first = first - second;
+	return first;
+}
+
+template <typename VectRes, typename Elem>
+VectRes operator* (const VectRes& vector, const Elem& item){
+	VectRes newVect;
+	newVect.resize(vector.getSize());
+
+	for (size_t i = 0; i < vector.getSize(); ++i)
+		newVect[i] = vector[i] * item;
+	return newVect;
+}
+
+template <typename VectRes, typename Elem>
+VectRes operator* (const Elem& item, const VectRes& vector){
+	return vector * item;
+}
+
+template <typename VectRes, typename Elem>
+VectRes& operator*= (VectRes& vector, const Elem& item){
+	for (size_t i = 0; i < vector.getSize; ++i)
+		vector[i] = vector[i] * item;
+	return vector;
+}
+
+#endif	/* _VECTOR_H_ */

@@ -1,12 +1,40 @@
 #include <iostream>
 
 #include "vector.hpp"
-#include "dynvector.hpp"
 #include "fixedvector.hpp"
+#include "dynvector.hpp"
+
+//#include "dynvector.hpp"
+//#include "fixedvector.hpp"
 
 using namespace std;
 
 int main() {
+
+	FixedVector<int,5> asd;
+	FixedVector<int,5> asd2;
+
+	//cin >> asd[1] >> asd[2];
+	//cout << asd;
+	cin >> asd;
+	cout << asd;
+	cout << asd + asd2;
+	cout << -asd;
+
+	for (size_t i = 0; i < asd.getSize(); ++i){
+		asd[i] = i;
+		asd2[i] = i+5;
+	}
+
+	asd += asd2;
+	cout << asd;
+
+	DynVector<int> asd3;
+	asd3.resize(5);
+	cout << asd3;
+
+ 
+	/*
 	DynVector<int> vect1(5);
 	DynVector<int> vect2(5);
 
@@ -53,4 +81,5 @@ int main() {
 	cout << static_cast<DynVector<int>>(vect1) << endl;
 
 	return 0;
+	*/
 }
