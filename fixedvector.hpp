@@ -3,7 +3,6 @@
 #define _FIXEDVECTOR_H_
 
 #include "vector.hpp"
-#include "dynvector.hpp"
 
 template <typename Elem>
 class DynVector;
@@ -24,10 +23,9 @@ public:
 	Elem* getVal() const override { return _val; }
 	void resize(size_t) {};
 
+	FixedVector<Elem,size>& operator= (const FixedVector<Elem,size>&);
 	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&); // transfert
 	FixedVector<Elem,size>& operator= (const DynVector<Elem>&); // conversion
-
-	virtual FixedVector<Elem,size> operator+ (const FixedVector<Elem,size>);
 
 	virtual void print(ostream&) const override;
 	virtual void input(istream&) const override;
@@ -35,6 +33,7 @@ public:
 	virtual ~FixedVector<Elem,size>() { delete[] _val; }
 };
 //----------------------------------------------------------------------------
+#include "dynvector.hpp"
 
 
 template <typename Elem, size_t size>
@@ -43,13 +42,14 @@ FixedVector<Elem,size>::FixedVector(): _val(new Elem[size]){
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>::FixedVector(const FixedVector<Elem,size>& other):
-_val(new Elem[size]) {
+FixedVector<Elem,size>::FixedVector
+	(const FixedVector<Elem,size>& other): _val(new Elem[size]) {
 	for (size_t i = 0; i < size; ++i) _val[i] = other[i];
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>::FixedVector(FixedVector<Elem,size>&& other){
+FixedVector<Elem,size>::FixedVector
+	(FixedVector<Elem,size>&& other): _val(new Elem[size]){
 	for(size_t i = 0; i < size; ++i){
 		_val[i] = other[i];
 		other[i] = 0;
@@ -57,7 +57,8 @@ FixedVector<Elem,size>::FixedVector(FixedVector<Elem,size>&& other){
 }
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>::FixedVector(const DynVector<Elem>& other){
+FixedVector<Elem,size>::FixedVector 
+	(const DynVector<Elem>& other): _val(new Elem[size]){
 	for(size_t i = 0; i < size; ++i){
 		if (i < other.getSize())
 			_val[i] = other[i];
@@ -66,9 +67,18 @@ FixedVector<Elem,size>::FixedVector(const DynVector<Elem>& other){
 	}
 }
 
+template <typename Elem, size_t size>
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator= 
+	(const FixedVector<Elem,size>& other) {
+	for(size_t i = 0; i < size; ++i){
+		_val[i] = other[i];
+	}
+	return *this;
+}
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (FixedVector<Elem,size>&& other){
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator= 
+	(FixedVector<Elem,size>&& other) {
 	for(size_t i = 0; i < size; ++i){
 		_val[i] = other[i];
 		other[i] = 0;
@@ -78,7 +88,8 @@ FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (FixedVector<Elem,size
 
 
 template <typename Elem, size_t size>
-FixedVector<Elem,size>& FixedVector<Elem,size>::operator= (const DynVector<Elem>& other){
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator= 
+	(const DynVector<Elem>& other){
 	for(size_t i = 0; i < size; ++i){
 		if (i < other.getSize())
 			_val[i] = other[i];

@@ -2,10 +2,10 @@
 #define _DYNVECTOR_H_
 
 #include "vector.hpp"
-#include "fixedvector.hpp"
 
 template <typename Elem, size_t SIZE>
 class FixedVector;
+
 
 using namespace std;
 
@@ -37,6 +37,7 @@ public:
 	virtual ~DynVector<Elem>() { delete[] _val; }
 };
 //----------------------------------------------------------------------------
+#include "fixedvector.hpp"
 
 
 template <typename Elem>

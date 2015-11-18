@@ -18,10 +18,10 @@ int main() {
 	//cout << asd;
 	cin >> asd;
 	cout << asd;
-	cout << asd + asd2;
+	//cout << asd + asd2;
 	cout << -asd;
 
-	for (size_t i = 0; i < asd.getSize(); ++i){
+	for (int i = 0; i < 5; ++i){
 		asd[i] = i;
 		asd2[i] = i+5;
 	}
@@ -31,6 +31,8 @@ int main() {
 
 	DynVector<int> asd3;
 	asd3.resize(5);
+	cout << asd3;
+	asd3 = asd;
 	cout << asd3;
 
  
