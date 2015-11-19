@@ -3,6 +3,7 @@
 #include "vector.hpp"
 #include "fixedvector.hpp"
 #include "dynvector.hpp"
+#include "polynome.hpp"
 
 //#include "dynvector.hpp"
 //#include "fixedvector.hpp"

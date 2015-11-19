@@ -1,11 +1,14 @@
 #ifndef _POLYNOME_H_
 #define _POLYNOME_H_
 
+#include "vector.hpp"
+
 template <typename Elem>
 class Polynome: Vector<Elem>{
-	int _degree;
 public:
 	virtual int getDegree();
+
+	virtual Elem operator() (const Elem& item);
 
 	virtual void print(ostream&) const override;
 	virtual void input(istream&) const override;
@@ -13,12 +16,54 @@ public:
 
 template <typename Elem>
 int Polynome<Elem>::getDegree(){
-	// get degree for positive (how to do negative?)
-	int degree = 0;
+	// generate degree with vector
+	int degree = -1;
 	for(size_t i = 0; i < this->getSize(); ++i)
-		if (this->getVal()[i]) degree = i;
+		if ((*this)[i]) degree = i;
 
 	return degree;
+}
+
+template <typename Elem>
+void Polynome<Elem>::print(ostream& os) const{
+	int degree(this->getDegree());
+	if (degree != -1){
+		for (size_t i = degree; i >= 0; --i){
+			if ((*this)[i] > 0){
+				if (i == degree)
+					os << '+';
+				os << (*this)[i] << '^' << degree-i << ' ';
+			}
+			else
+				os << '-' << -(*this)[i] << '^' << degree-i << ' ';
+		}
+	}
+	else
+		os << '0';
+}
+
+template <typename Elem>
+void Polynome<Elem>::input(istream& is) const{
+	
+}
+
+template <typename PolRes, typename Elem>
+PolRes operator* (const Polynome<Elem>& polyn, const Elem& item){
+	PolRes newPol;
+
+	for (size_t i = 0; i < polyn.getDegree(); ++i)
+		newPol[i] = polyn[i] * item;
+	return newPol;
+}
+
+template <typename Elem>
+Elem Polynome<Elem>::operator() (const Elem& item){
+	int degree(this->getDegree()); Elem temp((*this)[degree]);
+
+	for (size_t i = degree-1; i >= 0; --i){
+		temp = temp*item + (*this)[i];
+	}
+	return temp;
 }
 
 #endif	/* _POLYNOME_H_ */
