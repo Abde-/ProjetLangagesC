@@ -24,7 +24,7 @@ public:
 
 	size_t getSize() const override { return _size; }
 	Elem* getVal() const override { return _val; }
-	void resize(size_t);
+	bool resize(size_t);
 
 	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
 	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
@@ -68,7 +68,7 @@ DynVector<Elem>::DynVector(const FixedVector<Elem,SIZE>& other):
 }
 
 template <typename Elem>
-void DynVector<Elem>::resize(size_t newSize){
+bool DynVector<Elem>::resize(size_t newSize){
 	Elem* newVal = new Elem[newSize];
 
 	if(_size > newSize){
@@ -82,7 +82,7 @@ void DynVector<Elem>::resize(size_t newSize){
 			newVal[i] = 0;
 	}
 	_val = newVal; _size = newSize;
-
+	return true;
 }
 
 template <typename Elem>

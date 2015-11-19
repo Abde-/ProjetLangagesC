@@ -21,7 +21,7 @@ public:
 
 	size_t getSize() const override { return size; }
 	Elem* getVal() const override { return _val; }
-	void resize(size_t) {};
+	bool resize(size_t x) { return x>size? false : true; }
 
 	FixedVector<Elem,size>& operator= (const FixedVector<Elem,size>&);
 	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&); // transfert
