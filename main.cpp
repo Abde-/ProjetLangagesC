@@ -38,8 +38,11 @@ int main() {
 	cout << polyn2 << endl;
 	cin >> polyn1;
 	cout << polyn1 << endl;
+	cout << polyn1.getSize() << endl;
 	cin >> polyn2;
-	//cout << polyn2 << endl;
+	cout << polyn2 << endl;
+	cout << polyn2.getSize() << endl;
+
 	//cout << -polyn2 << endl;
 	cout << 5+6 << endl;
 
@@ -49,14 +52,14 @@ int main() {
 	//cout << polyn2[5] << endl;
 	
 	DynVector<int> vect1(5);
-	DynVector<int> vect2(5);
+	DynVector<int> vect2(10);
 
 	FixedVector<int,5> vect5;
 
-	for (size_t i = 0; i < vect1.getSize(); ++i){
+	for (size_t i = 0; i < vect1.getSize(); ++i)
 		vect1[i] = i;
+	for (size_t i = 0; i < vect2.getSize(); ++i)
 		vect2[i] = i+5;
-	}
 
 	vect1 = vect2;
 	vect1[0] = 5000;

@@ -11,6 +11,8 @@ public:
 	virtual Elem operator() (const Elem& item);
 
 	virtual void print(ostream&) const override;
+
+	virtual ~Polynome<Elem>() = default;
 };
 
 template <typename Elem>

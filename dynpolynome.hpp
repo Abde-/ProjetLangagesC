@@ -16,8 +16,6 @@ public:
 	virtual bool resize(size_t x) override{ return DynVector<Elem>::resize(x); }
 	virtual Elem* getVal() const override { return DynVector<Elem>::getVal(); }
 
-	//DynPolynome operator+(const DynPolynome& other);
-
 	virtual void print(ostream& os) const override { Polynome<Elem>::print(os); }
 	virtual void input(istream& is) override;
 
@@ -34,22 +32,6 @@ DynPolynome<Elem>::DynPolynome(const Elem& other){
 		(*this)[0] = other;
 	}
 }
-
-//template <typename Elem>
-//DynPolynome<Elem> DynPolynome<Elem>::operator+(const DynPolynome& other){
-//	size_t newSize;
-//
-//	if (this->getSize() > other.getSize())
-//		newSize = this->getSize();
-//	else{ newSize = other.getSize(); }
-//
-//	DynPolynome newVect;
-//	newVect.resize(newSize);
-//
-//	for (size_t i = 0; i < newSize; ++i)
-//		newVect[i] = this->getVal()[i] + other[i];
-//	return newVect;
-//}
 
 template <typename Elem>
 void DynPolynome<Elem>::input(istream& is){
