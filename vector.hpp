@@ -6,13 +6,14 @@
 
 using namespace std;
 
-///////////////////////////////////////////////////////////////////////////////
+//----------------------------------------------------------------------------
 
 template <typename Elem>
 class Vector{
 public:
 	virtual size_t getSize() const = 0;
 	virtual Elem* getVal() const = 0;
+	virtual bool resize(size_t) = 0;
 
 	virtual const Elem& operator[] (ptrdiff_t) const;
 	virtual Elem& operator[] (ptrdiff_t);
@@ -22,18 +23,18 @@ public:
 		return os;
 	};
 	
-	friend istream& operator>> (istream& is, const Vector<Elem>& v) {
+	friend istream& operator>> (istream& is, Vector<Elem>& v) {
 		v.input(is);
 		return is;
 	};
 
 	virtual void print(ostream&) const = 0; //methodes pour rendre iostream virtuellement pure
-	virtual void input(istream&) const = 0;
+	virtual void input(istream&) = 0;
 
 	virtual ~Vector<Elem>() = default;
 };
 
-///////////////////////////////////////////////////////////////////////////////
+//----------------------------------------------------------------------------
 
 template <typename Elem>
 const Elem& Vector<Elem>::operator[] (ptrdiff_t index) const{
@@ -107,28 +108,6 @@ template <typename VectRes>
 VectRes& operator-= (VectRes& first, const VectRes& second){
 	first = first - second;
 	return first;
-}
-
-template <typename VectRes, typename Elem>
-VectRes operator* (const VectRes& vector, const Elem& item){
-	VectRes newVect;
-	newVect.resize(vector.getSize());
-
-	for (size_t i = 0; i < vector.getSize(); ++i)
-		newVect[i] = vector[i] * item;
-	return newVect;
-}
-
-template <typename VectRes, typename Elem>
-VectRes operator* (const Elem& item, const VectRes& vector){
-	return vector * item;
-}
-
-template <typename VectRes, typename Elem>
-VectRes& operator*= (VectRes& vector, const Elem& item){
-	for (size_t i = 0; i < vector.getSize; ++i)
-		vector[i] = vector[i] * item;
-	return vector;
 }
 
 #endif	/* _VECTOR_H_ */

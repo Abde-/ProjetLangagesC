@@ -25,24 +25,26 @@ int Polynome<Elem>::getDegree() const{
 
 template <typename Elem>
 void Polynome<Elem>::print(ostream& os) const{
+
 	int degree(this->getDegree());
 	if (degree != -1){
-		for (size_t i = 0; i < degree+1; ++i){
+		for (size_t i = degree; i <= degree && i >= 0; --i){
 			
-			if ((*this)[i] > 0){
-				if (i != 0)
+			if (this->getVal()[i] > 0){
+				if (i != degree)
 					os << '+';
-				os << (*this)[i];
+				os << this->getVal()[i];
 			}
-			else os << '-' << -(*this)[i];
+			else os << '-' << this->getVal()[i];
 			
-			if(i != degree) os << 'x'<< '^' << degree-i << ' ';
+			if(i != 0) os << 'x'<< '^' << i << ' ';
 			else
 				os << ' ';
 		}
 	}
 	else
 		os << '0';
+
 }
 
 template <typename PolRes, typename Elem>

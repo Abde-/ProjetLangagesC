@@ -21,14 +21,17 @@ public:
 
 	size_t getSize() const override { return size; }
 	virtual Elem* getVal() const override { return _val; }
-	virtual bool resize(size_t x) { return x>size? false : true; }
+	virtual bool resize(size_t x) override { return x>size? false : true; }
 
 	FixedVector<Elem,size>& operator= (const FixedVector<Elem,size>&);
 	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&); // transfert
 	FixedVector<Elem,size>& operator= (const DynVector<Elem>&); // conversion
 
+	FixedVector<Elem,size> operator* (const Elem&);
+	FixedVector<Elem,size>& operator*= (const Elem&);
+
 	virtual void print(ostream&) const override;
-	virtual void input(istream&) const override;
+	virtual void input(istream&) override;
 
 	virtual ~FixedVector<Elem,size>() { delete[] _val; }
 };
@@ -101,6 +104,35 @@ FixedVector<Elem,size>& FixedVector<Elem,size>::operator=
 }
 
 template <typename Elem, size_t size>
+FixedVector<Elem,size> FixedVector<Elem,size>::operator* (const Elem& item){
+	FixedVector<Elem,size> newVect;
+	newVect.resize(this->getSize());
+
+	for (size_t i = 0; i < this->getSize(); ++i)
+		newVect[i] = (*this)[i] * item;
+	return newVect;
+}
+
+template <typename Elem, size_t size>
+FixedVector<Elem,size> operator* (const Elem& item, const FixedVector<Elem,size>& vector){
+	FixedVector<Elem,size> newVect;
+	newVect.resize(vector.getSize());
+
+	for (size_t i = 0; i < vector.getSize(); ++i)
+		newVect[i] = vector[i] * item;
+	return newVect;
+
+	return vector * item;
+}
+
+template <typename Elem, size_t size>
+FixedVector<Elem,size>& FixedVector<Elem,size>::operator*= (const Elem& item){
+	for (size_t i = 0; i < this->getSize(); ++i)
+		(*this)[i] = (*this)[i] * item;
+	return this;
+}
+
+template <typename Elem, size_t size>
 void FixedVector<Elem,size>::print(ostream& os) const {
 	os << "[";
 	for (size_t i=0; i < size; ++i){ 
@@ -112,7 +144,7 @@ void FixedVector<Elem,size>::print(ostream& os) const {
 }
 
 template <typename Elem, size_t size>
-void FixedVector<Elem,size>::input(istream& is) const {
+void FixedVector<Elem,size>::input(istream& is) {
 	for (size_t i=0; i < size; ++i)
 		is >> _val[i];
 }

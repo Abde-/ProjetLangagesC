@@ -6,9 +6,6 @@
 #include "polynome.hpp"
 #include "dynpolynome.hpp"
 
-//#include "dynvector.hpp"
-//#include "fixedvector.hpp"
-
 using namespace std;
 
 int main() {
@@ -37,13 +34,20 @@ int main() {
 	asd3 = asd;
 	cout << asd3;
 
-	DynPolynome<int> asdasd;
-	cout << asdasd;
-	asdasd.resize(10);
-	cin >> asdasd;
-	cout << asdasd;
- 
-	/*
+	DynPolynome<int> polyn1, polyn2;
+	cout << polyn2 << endl;
+	cin >> polyn1;
+	cout << polyn1 << endl;
+	cin >> polyn2;
+	//cout << polyn2 << endl;
+	//cout << -polyn2 << endl;
+	cout << 5+6 << endl;
+
+
+	DynPolynome<int> polyntest;
+	polyntest = polyn2 + polyn1;
+	//cout << polyn2[5] << endl;
+	
 	DynVector<int> vect1(5);
 	DynVector<int> vect2(5);
 
@@ -90,5 +94,5 @@ int main() {
 	cout << static_cast<DynVector<int>>(vect1) << endl;
 
 	return 0;
-	*/
+	
 }

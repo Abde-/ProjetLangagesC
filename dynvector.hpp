@@ -17,6 +17,7 @@ class DynVector : virtual public Vector<Elem> {
 	Elem* _val;				//tableau dynamique
 public:
 	DynVector();	//constructeur
+	DynVector(size_t size);	//constructeur
 	DynVector(const DynVector<Elem>&); //constructeur de copie
 	DynVector(DynVector<Elem>&&); // constructeur de transfert
 	template <size_t SIZE>
@@ -24,15 +25,18 @@ public:
 
 	size_t getSize() const override { return _size; }
 	virtual Elem* getVal() const override { return _val; }
-	virtual bool resize(size_t);
+	virtual bool resize(size_t) override;
 
 	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
 	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
 	template <size_t SIZE>
 	DynVector<Elem>& operator= (const FixedVector<Elem,SIZE>&);
 
+	DynVector<Elem> operator* (const Elem&);
+	DynVector<Elem>& operator*= (const Elem&);
+
 	virtual void print(ostream&) const override;
-	virtual void input(istream&) const override;
+	virtual void input(istream&) override;
 
 	virtual ~DynVector<Elem>() { delete[] _val; }
 };
@@ -42,6 +46,11 @@ public:
 
 template <typename Elem>
 DynVector<Elem>::DynVector(): _size(0), _val(new Elem[0]) {
+	for (size_t i = 0; i < _size; ++i) _val[i] = 0;
+}
+
+template <typename Elem>
+DynVector<Elem>::DynVector(size_t size): _size(size), _val(new Elem[size]) {
 	for (size_t i = 0; i < _size; ++i) _val[i] = 0;
 }
 
@@ -115,6 +124,33 @@ DynVector<Elem>& DynVector<Elem>::operator= (const FixedVector<Elem,SIZE>& other
 	return *this;
 }
 
+template <typename Elem>
+DynVector<Elem> DynVector<Elem>::operator* (const Elem& item){
+	DynVector<Elem> newVect;
+	newVect.resize(this->getSize());
+
+	for (size_t i = 0; i < this->getSize(); ++i)
+		newVect[i] = (*this)[i] * item;
+	return newVect;
+}
+
+template <typename Elem>
+DynVector<Elem> operator* (const Elem& item, const DynVector<Elem>& vector){
+	DynVector<Elem> newVect;
+	newVect.resize(vector.getSize());
+
+	for (size_t i = 0; i < vector.getSize(); ++i)
+		newVect[i] = vector[i] * item;
+	return newVect;
+}
+
+template <typename Elem>
+DynVector<Elem>& DynVector<Elem>::operator*= (const Elem& item){
+	for (size_t i = 0; i < this->getSize(); ++i)
+		(*this)[i] = (*this)[i] * item;
+	return this;
+}
+
 template <typename Elem> // works
 void DynVector<Elem>::print(ostream& os) const {
 	os << "[";
@@ -127,9 +163,9 @@ void DynVector<Elem>::print(ostream& os) const {
 }
 
 template <typename Elem> // works
-void DynVector<Elem>::input(istream& is) const {
+void DynVector<Elem>::input(istream& is) {
 	for (size_t i=0; i < _size; ++i)
-		is >> _val[i];
+		is >> this->getVal()[i];
 }
 
 #endif   /* _DYNVECTOR_H_ */

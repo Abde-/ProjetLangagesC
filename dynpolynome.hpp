@@ -16,8 +16,10 @@ public:
 	virtual bool resize(size_t x) override{ return DynVector<Elem>::resize(x); }
 	virtual Elem* getVal() const override { return DynVector<Elem>::getVal(); }
 
+	//DynPolynome operator+(const DynPolynome& other);
+
 	virtual void print(ostream& os) const override { Polynome<Elem>::print(os); }
-	virtual void input(istream& is) const override;
+	virtual void input(istream& is) override;
 
 	DynPolynome<Elem>& operator= (const Elem&);
 
@@ -33,20 +35,39 @@ DynPolynome<Elem>::DynPolynome(const Elem& other){
 	}
 }
 
+//template <typename Elem>
+//DynPolynome<Elem> DynPolynome<Elem>::operator+(const DynPolynome& other){
+//	size_t newSize;
+//
+//	if (this->getSize() > other.getSize())
+//		newSize = this->getSize();
+//	else{ newSize = other.getSize(); }
+//
+//	DynPolynome newVect;
+//	newVect.resize(newSize);
+//
+//	for (size_t i = 0; i < newSize; ++i)
+//		newVect[i] = this->getVal()[i] + other[i];
+//	return newVect;
+//}
+
 template <typename Elem>
-void DynPolynome<Elem>::input(istream& is) const{
-	int degree;
+void DynPolynome<Elem>::input(istream& is){
+	int degree; bool resizeable;
 	cout << "Degree:"; cin >> degree;
 
-	if (degree <= this->getSize()){
-		for (int i = 0; i < degree; ++i)
-			is >> this->getVal()[i];
+	resizeable = this->resize(degree+1);
+
+	if (resizeable){
+		if(degree != -1){	
+			for (int i = degree; i <= degree && i >= 0; --i)
+				is >> (*this)[i];
+			}
+		else
+			(*this)[0] = 0;
 	}
 	else{
-		if(degree == -1)
-			 this->getVal()[0] = 0;
-		else
-			cout << "Degree not valid. (do resize)";
+		cout << "Degree not valid. (cannot resize)";
 	}
 }
 
