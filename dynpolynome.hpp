@@ -42,9 +42,12 @@ void DynPolynome<Elem>::input(istream& is) const{
 		for (int i = 0; i < degree; ++i)
 			is >> this->getVal()[i];
 	}
-	else
-		cout << "Degree not valid. (do resize)";
-	cout << "hello" << endl;
+	else{
+		if(degree == -1)
+			 this->getVal()[0] = 0;
+		else
+			cout << "Degree not valid. (do resize)";
+	}
 }
 
 template <typename Elem>

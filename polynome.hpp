@@ -27,14 +27,18 @@ template <typename Elem>
 void Polynome<Elem>::print(ostream& os) const{
 	int degree(this->getDegree());
 	if (degree != -1){
-		for (size_t i = degree; i >= 0; --i){
+		for (size_t i = 0; i < degree+1; ++i){
+			
 			if ((*this)[i] > 0){
-				if (i == degree)
+				if (i != 0)
 					os << '+';
-				os << (*this)[i] << '^' << degree-i << ' ';
+				os << (*this)[i];
 			}
+			else os << '-' << -(*this)[i];
+			
+			if(i != degree) os << 'x'<< '^' << degree-i << ' ';
 			else
-				os << '-' << -(*this)[i] << '^' << degree-i << ' ';
+				os << ' ';
 		}
 	}
 	else
