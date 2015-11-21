@@ -10,7 +10,7 @@ class DynVector;
 using namespace std;
 //----------------------------------------------------------------------------
 template <typename Elem,size_t size>
-class FixedVector: public Vector<Elem>{
+class FixedVector: virtual public Vector<Elem>{
 	Elem* _val;
 
 public:
@@ -20,8 +20,8 @@ public:
 	FixedVector(const DynVector<Elem>&); // constructeur conversion
 
 	size_t getSize() const override { return size; }
-	Elem* getVal() const override { return _val; }
-	bool resize(size_t x) { return x>size? false : true; }
+	virtual Elem* getVal() const override { return _val; }
+	virtual bool resize(size_t x) { return x>size? false : true; }
 
 	FixedVector<Elem,size>& operator= (const FixedVector<Elem,size>&);
 	FixedVector<Elem,size>& operator= (FixedVector<Elem,size>&&); // transfert

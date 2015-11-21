@@ -4,18 +4,17 @@
 #include "vector.hpp"
 
 template <typename Elem>
-class Polynome: Vector<Elem>{
+class Polynome: virtual public Vector<Elem>{
 public:
-	virtual int getDegree();
+	virtual int getDegree() const;
 
 	virtual Elem operator() (const Elem& item);
 
 	virtual void print(ostream&) const override;
-	virtual void input(istream&) const override;
 };
 
 template <typename Elem>
-int Polynome<Elem>::getDegree(){
+int Polynome<Elem>::getDegree() const{
 	// generate degree with vector
 	int degree = -1;
 	for(size_t i = 0; i < this->getSize(); ++i)
@@ -40,11 +39,6 @@ void Polynome<Elem>::print(ostream& os) const{
 	}
 	else
 		os << '0';
-}
-
-template <typename Elem>
-void Polynome<Elem>::input(istream& is) const{
-	
 }
 
 template <typename PolRes, typename Elem>

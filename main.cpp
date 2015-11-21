@@ -4,6 +4,7 @@
 #include "fixedvector.hpp"
 #include "dynvector.hpp"
 #include "polynome.hpp"
+#include "dynpolynome.hpp"
 
 //#include "dynvector.hpp"
 //#include "fixedvector.hpp"
@@ -36,6 +37,11 @@ int main() {
 	asd3 = asd;
 	cout << asd3;
 
+	DynPolynome<int> asdasd;
+	cout << asdasd;
+	asdasd.resize(10);
+	cin >> asdasd;
+	cout << asdasd;
  
 	/*
 	DynVector<int> vect1(5);

@@ -12,7 +12,7 @@ using namespace std;
 
 //----------------------------------------------------------------------------
 template <typename Elem>
-class DynVector : public Vector<Elem> {
+class DynVector : virtual public Vector<Elem> {
 	size_t _size;
 	Elem* _val;				//tableau dynamique
 public:
@@ -23,8 +23,8 @@ public:
 	DynVector(const FixedVector<Elem,SIZE>&); // constructeur de conversion
 
 	size_t getSize() const override { return _size; }
-	Elem* getVal() const override { return _val; }
-	bool resize(size_t);
+	virtual Elem* getVal() const override { return _val; }
+	virtual bool resize(size_t);
 
 	DynVector<Elem>& operator= (const DynVector<Elem>&); //assignation de copie
 	DynVector<Elem>& operator= (DynVector<Elem>&&); //assignation de transfert
