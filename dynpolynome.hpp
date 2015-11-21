@@ -17,7 +17,7 @@ public:
 	virtual Elem* getVal() const override { return DynVector<Elem>::getVal(); }
 
 	virtual void print(ostream& os) const override { Polynome<Elem>::print(os); }
-	virtual void input(istream& is) override;
+	virtual void input(istream& is) override { Polynome<Elem>::input(is); }
 
 	DynPolynome<Elem>& operator= (const Elem&);
 
@@ -33,25 +33,6 @@ DynPolynome<Elem>::DynPolynome(const Elem& other){
 	}
 }
 
-template <typename Elem>
-void DynPolynome<Elem>::input(istream& is){
-	int degree; bool resizeable;
-	cout << "Degree:"; cin >> degree;
-
-	resizeable = this->resize(degree+1);
-
-	if (resizeable){
-		if(degree != -1){	
-			for (int i = degree; i <= degree && i >= 0; --i)
-				is >> (*this)[i];
-			}
-		else
-			(*this)[0] = 0;
-	}
-	else{
-		cout << "Degree not valid. (cannot resize)";
-	}
-}
 
 template <typename Elem>
 DynPolynome<Elem>& DynPolynome<Elem>::operator= (const Elem& other){

@@ -11,6 +11,7 @@ public:
 	virtual Elem operator() (const Elem& item);
 
 	virtual void print(ostream&) const override;
+	virtual void input(istream& is) override;
 
 	virtual ~Polynome<Elem>() = default;
 };
@@ -46,8 +47,28 @@ void Polynome<Elem>::print(ostream& os) const{
 	}
 	else
 		os << '0';
-
 }
+
+template <typename Elem>
+void Polynome<Elem>::input(istream& is){
+	int degree; bool resizeable;
+	cout << "Degree:"; cin >> degree;
+
+	resizeable = this->resize(degree+1);
+
+	if (resizeable){
+		if(degree != -1){	
+			for (int i = degree; i <= degree && i >= 0; --i)
+				is >> (*this)[i];
+			}
+		else
+			(*this)[0] = 0;
+	}
+	else{
+		cout << "Degree not valid. (cannot resize)";
+	}
+}
+
 
 template <typename PolRes, typename Elem>
 PolRes operator* (const Polynome<Elem>& polyn, const Elem& item){
@@ -62,7 +83,7 @@ template <typename Elem>
 Elem Polynome<Elem>::operator() (const Elem& item){
 	int degree(this->getDegree()); Elem temp((*this)[degree]);
 
-	for (size_t i = degree-1; i >= 0; --i){
+	for (size_t i = degree-1; i <= degree && i >= 0; --i){
 		temp = temp*item + (*this)[i];
 	}
 	return temp;
