@@ -7,9 +7,8 @@
 template <typename Elem>
 class DynPolynome: public DynVector<Elem>, public Polynome<Elem>{
 public:
-	// constructor par defaut non défini car toutes variables
 	// initialisées dans dynyvector, ainsi que l'assignation etc...
-	DynPolynome() { DynVector<Elem>(); }
+	DynPolynome() { }
 	DynPolynome(const Elem&); //constructeur conversion
 
 	virtual size_t getSize() const override { return DynVector<Elem>::getSize(); }
