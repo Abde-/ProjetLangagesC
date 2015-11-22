@@ -59,25 +59,22 @@ VectRes operator+ (const VectRes& first){
 template <typename VectRes>
 //binary
 VectRes operator+ (const VectRes& first, const VectRes& second){
-	size_t newSize; size_t smaller;
+	size_t newSize;
 
-	if (first.getSize() > second.getSize()){
+	if (first.getSize() > second.getSize())
 		newSize = first.getSize();
-		smaller = second.getSize();
-	}
-	else{
+	else
 		newSize = second.getSize();
-		smaller = first.getSize();}
 
 	VectRes newVect;
 	newVect.resize(newSize);
 
 	for (size_t i = 0; i < newSize; ++i){
 		newVect[i] = 0;
-		if (first.getSize() < smaller)
+		if (first.getSize() > i)
 			newVect[i] += first[i];
 	
-		if (second.getSize() < smaller)
+		if (second.getSize() > i)
 			newVect[i] += second[i];
 	}
 	return newVect;
@@ -100,25 +97,22 @@ VectRes operator- (const VectRes& first){
 
 template <typename VectRes>
 VectRes operator- (const VectRes& first, const VectRes& second){
-	size_t newSize; size_t smaller;
+	size_t newSize;
 
-	if (first.getSize() > second.getSize()){
+	if (first.getSize() > second.getSize())
 		newSize = first.getSize();
-		smaller = second.getSize();
-	}
-	else{
+	else
 		newSize = second.getSize();
-		smaller = first.getSize();}
 
 	VectRes newVect;
 	newVect.resize(newSize);
 
 	for (size_t i = 0; i < newSize; ++i){
 		newVect[i] = 0;
-		if (first.getSize() < smaller)
+		if (first.getSize() > i)
 			newVect[i] += first[i];
 	
-		if (second.getSize() < smaller)
+		if (second.getSize() > i)
 			newVect[i] -= second[i];
 	}
 	return newVect;

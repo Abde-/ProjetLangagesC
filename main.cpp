@@ -35,21 +35,19 @@ int main() {
 //	cout << asd3;
 //
 	DynPolynome<int> polyn1, polyn2;
-//	cout << polyn2 << endl;
+	cout << polyn2 << endl;
 	cin >> polyn1;
-//	cout << polyn1 << endl;
-//	cout << polyn1.getSize() << endl;
-//	cin >> polyn2;
-//	cout << polyn2 << endl;
-//	cout << polyn2.getSize() << endl;
+	cout << polyn1 << endl;
+	cin >> polyn2;
+	cout << polyn2 << endl;
 //
 //	//cout << -polyn2 << endl;
 //	cout << 5+6 << endl;
 //
-	cout << polyn1(4);
-//	DynPolynome<int> polyntest;
-//	polyntest = polyn2 + polyn1;
-//	//cout << polyn2[5] << endl;
+//	cout << polyn1(4);
+	DynPolynome<int> polyntest;
+	polyntest = polyn2 + polyn1;
+	cout << polyntest << endl;
 //	
 //	DynVector<int> vect1(5);
 //	DynVector<int> vect2(10);
