@@ -48,6 +48,7 @@ int main() {
 	DynPolynome<int> polyntest;
 	polyntest = polyn2 + polyn1;
 	cout << polyntest << endl;
+	cout << polyntest * 3 << endl;
 //	
 //	DynVector<int> vect1(5);
 //	DynVector<int> vect2(10);

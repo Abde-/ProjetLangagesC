@@ -71,15 +71,6 @@ void Polynome<Elem>::input(istream& is){
 }
 
 
-template <typename PolRes, typename Elem>
-PolRes operator* (const Polynome<Elem>& polyn, const Elem& item){
-	PolRes newPol;
-
-	for (size_t i = 0; i < polyn.getDegree(); ++i)
-		newPol[i] = polyn[i] * item;
-	return newPol;
-}
-
 template <typename Elem>
 Elem Polynome<Elem>::operator() (const Elem& item){
 	int degree(this->getDegree()); Elem temp((*this)[degree]);

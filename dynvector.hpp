@@ -148,7 +148,7 @@ template <typename Elem>
 DynVector<Elem>& DynVector<Elem>::operator*= (const Elem& item){
 	for (size_t i = 0; i < this->getSize(); ++i)
 		(*this)[i] = (*this)[i] * item;
-	return this;
+	return (*this);
 }
 
 template <typename Elem> // works
