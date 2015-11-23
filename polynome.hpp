@@ -30,11 +30,13 @@ template <typename PolRes>
 //binary
 PolRes operator* (const PolRes& first, const PolRes& second){
 	PolRes newPol;
-	newPol.resize(first.getSize() + second.getSize());
+	if (first.getDegree() != -1 && second.getDegree() != -1){
+		newPol.resize(first.getSize() + second.getSize());
 
-	for(size_t i = 0; i < first.getSize(); ++i){
-		for(size_t j = 0; j < second.getSize(); ++j){
-			newPol[i+j] += (first[i] * second[j]);
+		for(size_t i = 0; i < first.getSize(); ++i){
+			for(size_t j = 0; j < second.getSize(); ++j){
+				newPol[i+j] += (first[i] * second[j]);
+			}
 		}
 	}
 	return newPol;

@@ -5,6 +5,7 @@
 #include "dynvector.hpp"
 #include "polynome.hpp"
 #include "dynpolynome.hpp"
+#include "modpolynome.hpp"
 
 using namespace std;
 
