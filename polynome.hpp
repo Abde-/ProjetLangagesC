@@ -47,7 +47,7 @@ void Polynome<Elem>::print(ostream& os) const{
 
 	int degree(this->getDegree());
 	if (degree != -1){
-		for (size_t i = degree; i <= degree && i >= 0; --i){
+		for (int i = degree; i <= degree && i >= 0; --i){
 			if (this->getVal()[i] != 0){
 				if (this->getVal()[i] > 0){
 					if (i != degree)
@@ -91,7 +91,7 @@ template <typename Elem>
 Elem Polynome<Elem>::operator() (const Elem& item){
 	int degree(this->getDegree()); Elem temp((*this)[degree]);
 
-	for (size_t i = degree-1; i <= degree && i >= 0; --i){
+	for (int i = degree-1; i <= degree && i >= 0; --i){
 		temp = temp*item + (*this)[i];
 	}
 	return temp;

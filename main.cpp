@@ -11,15 +11,15 @@ using namespace std;
 
 int main() {
 
-//	FixedVector<int,5> asd;
-//	FixedVector<int,5> asd2;
+	FixedVector<int,5> asd;
+	FixedVector<int,5> asd2;
 //
-//	//cin >> asd[1] >> asd[2];
-//	//cout << asd;
+	//cin >> asd[1] >> asd[2];
+	//cout << asd;
 //	cin >> asd;
-//	cout << asd;
+	cout << asd;
 //	//cout << asd + asd2;
-//	cout << -asd;
+	cout << -asd;
 //
 //	for (int i = 0; i < 5; ++i){
 //		asd[i] = i;
@@ -50,7 +50,12 @@ int main() {
 	polyntest = polyn2 + polyn1;
 	cout << polyntest << endl;
 	cout << polyn2 * polyn1 << endl;
+	DynPolynome<int> polyn3 = polyn1;
+	cout << polyn1 << endl;
+	polyn1[0] = 1000000;
+	cout << polyn3 << endl;
 
+	ModPolynome<int,polyn3.getDegree(),polyn3> modtest;
 //	
 //	DynVector<int> vect1(5);
 //	DynVector<int> vect2(10);
