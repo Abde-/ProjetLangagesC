@@ -12,7 +12,7 @@ class ModPolynome: public FixedVector<Elem,size>, public Polynome<Elem>{
 public:
 	ModPolynome();
 
-	virtual size_t getSize() const override { return FixedVector<Elem,size>::getSize(); }
+	size_t getSize() override { return FixedVector<Elem,size>::getSize(); }
 	virtual bool resize(size_t x) override{ return FixedVector<Elem,size>::resize(x); }
 	virtual Elem* getVal() const override { return FixedVector<Elem,size>::getVal(); }
 

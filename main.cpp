@@ -50,12 +50,12 @@ int main() {
 	polyntest = polyn2 + polyn1;
 	cout << polyntest << endl;
 	cout << polyn2 * polyn1 << endl;
-	DynPolynome<int> polyn3 = polyn1;
+	const DynPolynome<int> polyn3 = polyn1;
 	cout << polyn1 << endl;
 	polyn1[0] = 1000000;
 	cout << polyn3 << endl;
 
-	ModPolynome<int,polyn3.getDegree(),polyn3> modtest;
+	ModPolynome<int,polyn3.getDegree(),&polyn3> modtest;
 //	
 //	DynVector<int> vect1(5);
 //	DynVector<int> vect2(10);
