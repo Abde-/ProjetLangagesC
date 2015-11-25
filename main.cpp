@@ -60,8 +60,16 @@ int main() {
 //		polyntest[i] = 0;
 //
 	cin >> polyntest;
-	ModPolynome<int,10,polyntest> modtest;
-	modtest = 3;
+//	DynPolynome<int> poly1;
+//	cin >> poly1;
+//	for (size_t i = 0; i < 20; ++i)
+//		poly1 *= polyntest;
+//	cout << poly1;
+	ModPolynome<int,5,polyntest> modtest;
+	ModPolynome<int,5,polyntest> modtest2;
+	cin >> modtest;
+	cin >> modtest2;
+	cout << modtest + modtest2;
 
 	cout << modtest;
 	cout << -modtest;
