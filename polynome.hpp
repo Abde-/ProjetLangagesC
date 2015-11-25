@@ -32,12 +32,12 @@ int Polynome<Elem>::getDegree() const{
 template <typename PolRes>
 //binary
 PolRes operator* (const PolRes& first, const PolRes& second){
-	PolRes newPol;
+	PolRes newPol; size_t firstSize(first.getSize()), secondSize(second.getSize());
 	if (first.getDegree() != -1 && second.getDegree() != -1){
-		newPol.resize(first.getSize() + second.getSize());
+		newPol.resize(firstSize + secondSize);
 
-		for(size_t i = 0; i < first.getSize(); ++i){
-			for(size_t j = 0; j < second.getSize(); ++j){
+		for(size_t i = 0; i < firstSize; ++i){
+			for(size_t j = 0; j < secondSize; ++j){
 				newPol[i+j] += (first[i] * second[j]);
 			}
 		}
@@ -45,7 +45,11 @@ PolRes operator* (const PolRes& first, const PolRes& second){
 	return newPol;
 }
 
-// TODO : operator *=
+template <typename PolRes>
+PolRes& operator*= (PolRes& first, const PolRes& second){
+	first = first * second;
+	return first;
+}
 
 template <typename Elem>
 void Polynome<Elem>::print(ostream& os) const{

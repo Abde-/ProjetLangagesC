@@ -124,27 +124,28 @@ DynVector<Elem>& DynVector<Elem>::operator= (const FixedVector<Elem,SIZE>& other
 
 template <typename Elem>
 DynVector<Elem> DynVector<Elem>::operator* (const Elem& item){
-	DynVector<Elem> newVect;
-	newVect.resize(this->getSize());
+	DynVector<Elem> newVect; size_t newSize = this->getSize();
+	newVect.resize(newSize);
 
-	for (size_t i = 0; i < this->getSize(); ++i)
+	for (size_t i = 0; i < newSize; ++i)
 		newVect[i] = (*this)[i] * item;
 	return newVect;
 }
 
 template <typename Elem>
 DynVector<Elem> operator* (const Elem& item, const DynVector<Elem>& vector){
-	DynVector<Elem> newVect;
-	newVect.resize(vector.getSize());
+	DynVector<Elem> newVect; size_t newSize = vector.getSize();
+	newVect.resize(newSize);
 
-	for (size_t i = 0; i < vector.getSize(); ++i)
+	for (size_t i = 0; i < newSize; ++i)
 		newVect[i] = vector[i] * item;
 	return newVect;
 }
 
 template <typename Elem>
 DynVector<Elem>& DynVector<Elem>::operator*= (const Elem& item){
-	for (size_t i = 0; i < this->getSize(); ++i)
+	size_t newSize = this->getSize();
+	for (size_t i = 0; i < newSize; ++i)
 		(*this)[i] = (*this)[i] * item;
 	return *this;
 }
@@ -153,7 +154,7 @@ template <typename Elem> // works
 void DynVector<Elem>::print(ostream& os) const {
 	os << "[";
 	for (size_t i=0; i < _size; ++i){ 
-		os << _val[i];
+		os << (*this)[i];
 		if (i != _size-1)
 			os << ",";
 	 }
@@ -163,7 +164,7 @@ void DynVector<Elem>::print(ostream& os) const {
 template <typename Elem> // works
 void DynVector<Elem>::input(istream& is) {
 	for (size_t i=0; i < _size; ++i)
-		is >> this->getVal()[i];
+		is >> (*this)[i];
 }
 
 #endif   /* _DYNVECTOR_H_ */

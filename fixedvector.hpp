@@ -108,9 +108,8 @@ FixedVector<Elem,size>& FixedVector<Elem,size>::operator=
 template <typename Elem, size_t size>
 FixedVector<Elem,size> FixedVector<Elem,size>::operator* (const Elem& item){
 	FixedVector<Elem,size> newVect;
-	newVect.resize(this->getSize());
 
-	for (size_t i = 0; i < this->getSize(); ++i)
+	for (size_t i = 0; i < size; ++i)
 		newVect[i] = (*this)[i] * item;
 	return newVect;
 }
@@ -118,27 +117,24 @@ FixedVector<Elem,size> FixedVector<Elem,size>::operator* (const Elem& item){
 template <typename Elem, size_t size>
 FixedVector<Elem,size> operator* (const Elem& item, const FixedVector<Elem,size>& vector){
 	FixedVector<Elem,size> newVect;
-	newVect.resize(vector.getSize());
 
-	for (size_t i = 0; i < vector.getSize(); ++i)
+	for (size_t i = 0; i < size; ++i)
 		newVect[i] = vector[i] * item;
 	return newVect;
-
-	return vector * item;
 }
 
 template <typename Elem, size_t size>
 FixedVector<Elem,size>& FixedVector<Elem,size>::operator*= (const Elem& item){
-	for (size_t i = 0; i < this->getSize(); ++i)
+	for (size_t i = 0; i < size; ++i)
 		(*this)[i] = (*this)[i] * item;
-	return this;
+	return *this;
 }
 
 template <typename Elem, size_t size>
 void FixedVector<Elem,size>::print(ostream& os) const {
 	os << "[";
 	for (size_t i=0; i < size; ++i){ 
-		os << _val[i];
+		os << (*this)[i];
 		if (i != size-1)
 			os << ",";
 	 }
@@ -148,7 +144,7 @@ void FixedVector<Elem,size>::print(ostream& os) const {
 template <typename Elem, size_t size>
 void FixedVector<Elem,size>::input(istream& is) {
 	for (size_t i=0; i < size; ++i)
-		is >> _val[i];
+		is >> (*this)[i];
 }
 
 #endif   /* _FIXEDVECTOR_H_ */

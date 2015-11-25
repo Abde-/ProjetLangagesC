@@ -9,7 +9,6 @@
 template <typename Elem>
 class DynPolynome: public DynVector<Elem>, public Polynome<Elem>{
 public:
-	// initialisées dans dynyvector, ainsi que l'assignation etc...
 	DynPolynome() {}
 	DynPolynome(const Elem&); //constructeur conversion
 
