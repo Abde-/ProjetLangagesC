@@ -6,11 +6,8 @@
 template <typename Elem, size_t SIZE>
 class FixedVector;
 
-
-using namespace std;
-
-
 //----------------------------------------------------------------------------
+
 template <typename Elem>
 class DynVector : virtual public Vector<Elem> {
 	size_t _size;
@@ -40,9 +37,10 @@ public:
 
 	virtual ~DynVector<Elem>() { delete[] _val; }
 };
-//----------------------------------------------------------------------------
-#include "fixedvector.hpp"
 
+//----------------------------------------------------------------------------
+
+#include "fixedvector.hpp"
 
 template <typename Elem>
 DynVector<Elem>::DynVector(): _size(0), _val(new Elem[0]) {
@@ -148,7 +146,7 @@ template <typename Elem>
 DynVector<Elem>& DynVector<Elem>::operator*= (const Elem& item){
 	for (size_t i = 0; i < this->getSize(); ++i)
 		(*this)[i] = (*this)[i] * item;
-	return (*this);
+	return *this;
 }
 
 template <typename Elem> // works

@@ -9,17 +9,20 @@
 
 using namespace std;
 
+
+DynPolynome<int> polyntest;
+
 int main() {
 
-	FixedVector<int,5> asd;
-	FixedVector<int,5> asd2;
+//	FixedVector<int,5> asd;
+//	FixedVector<int,5> asd2;
 //
 	//cin >> asd[1] >> asd[2];
 	//cout << asd;
 //	cin >> asd;
-	cout << asd;
+//	cout << asd;
 //	//cout << asd + asd2;
-	cout << -asd;
+//	cout << -asd;
 //
 //	for (int i = 0; i < 5; ++i){
 //		asd[i] = i;
@@ -35,27 +38,34 @@ int main() {
 //	asd3 = asd;
 //	cout << asd3;
 //
-	DynPolynome<int> polyn1, polyn2;
-	cout << polyn2 << endl;
-	cin >> polyn1;
-	cout << polyn1 << endl;
-	cin >> polyn2;
-	cout << polyn2 << endl;
+//	DynPolynome<int> polyn1, polyn2;
+//	cout << polyn2 << endl;
+//	cin >> polyn1;
+//	cout << polyn1 << endl;
+//	cin >> polyn2;
 //
 //	//cout << -polyn2 << endl;
 //	cout << 5+6 << endl;
 //
 //	cout << polyn1(4);
-	DynPolynome<int> polyntest;
-	polyntest = polyn2 + polyn1;
-	cout << polyntest << endl;
-	cout << polyn2 * polyn1 << endl;
-	const DynPolynome<int> polyn3 = polyn1;
-	cout << polyn1 << endl;
-	polyn1[0] = 1000000;
-	cout << polyn3 << endl;
+//	polyntest = polyn2 + polyn1 ;
+//	cout << polyntest << endl;
+//	cout << polyn2 * polyn1 << endl;
+//	const DynPolynome<int> polyn3 = polyn1;
+//	cout << polyn1 << endl;
+//	polyn1[0] = 1000000;
+//	cout << polyn3 << endl;
+//	polyntest.resize(10);
+//	for(size_t i = 0; i < 10; ++i)
+//		polyntest[i] = 0;
+//
+	cin >> polyntest;
+	ModPolynome<int,10,polyntest> modtest;
+	modtest = 3;
 
-	ModPolynome<int,polyn3.getDegree(),&polyn3> modtest;
+	cout << modtest;
+	cout << -modtest;
+
 //	
 //	DynVector<int> vect1(5);
 //	DynVector<int> vect2(10);

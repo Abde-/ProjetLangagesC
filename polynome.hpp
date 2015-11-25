@@ -3,6 +3,8 @@
 
 #include "vector.hpp"
 
+//----------------------------------------------------------------------------
+
 template <typename Elem>
 class Polynome: virtual public Vector<Elem>{
 public:
@@ -16,13 +18,14 @@ public:
 	virtual ~Polynome<Elem>() = default;
 };
 
+//----------------------------------------------------------------------------
+
 template <typename Elem>
 int Polynome<Elem>::getDegree() const{
 	// generate degree with vector
 	int degree = -1;
 	for(size_t i = 0; i < this->getSize(); ++i)
 		if ((*this)[i]) degree = i;
-
 	return degree;
 }
 
@@ -42,23 +45,20 @@ PolRes operator* (const PolRes& first, const PolRes& second){
 	return newPol;
 }
 
+// TODO : operator *=
+
 template <typename Elem>
 void Polynome<Elem>::print(ostream& os) const{
 
 	int degree(this->getDegree());
 	if (degree != -1){
 		for (int i = degree; i <= degree && i >= 0; --i){
-			if (this->getVal()[i] != 0){
-				if (this->getVal()[i] > 0){
-					if (i != degree)
-						os << '+';
-					os << this->getVal()[i];
-				}
-				else os << '-' << this->getVal()[i];
-				
-				if(i != 0) os << 'x'<< '^' << i << ' ';
-				else
-					os << ' ';
+			if ((*this)[i] != 0){
+				if ((*this)[i] > 0 && i != degree)
+					os << '+';
+				os << (*this)[i];
+				if(i != 0) os << 'x'<< '^' << i ;
+				os << ' ';
 			}
 		}
 	}
@@ -85,7 +85,6 @@ void Polynome<Elem>::input(istream& is){
 		cout << "Degree not valid. (cannot resize)";
 	}
 }
-
 
 template <typename Elem>
 Elem Polynome<Elem>::operator() (const Elem& item){

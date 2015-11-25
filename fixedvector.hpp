@@ -7,8 +7,8 @@
 template <typename Elem>
 class DynVector;
 
-using namespace std;
 //----------------------------------------------------------------------------
+
 template <typename Elem,size_t size>
 class FixedVector: virtual public Vector<Elem>{
 	Elem* _val;
@@ -19,7 +19,7 @@ public:
 	FixedVector(FixedVector<Elem,size>&&); // constructeur de transfert
 	FixedVector(const DynVector<Elem>&); // constructeur conversion
 
-	size_t getSize() const override { return size; }
+	virtual size_t getSize() const override { return size; }
 	virtual Elem* getVal() const override { return _val; }
 	virtual bool resize(size_t x) override { return x>size? false : true; }
 
@@ -35,7 +35,9 @@ public:
 
 	virtual ~FixedVector<Elem,size>() { delete[] _val; }
 };
+
 //----------------------------------------------------------------------------
+
 #include "dynvector.hpp"
 
 
